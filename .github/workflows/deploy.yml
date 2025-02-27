@@ -38,7 +38,7 @@ jobs:
         run: sudo docker pull nitishsati8/ecom_api_gateway:latest
       - name: Delete existing container
         run: |
-          if [ "$(sudo docker ps -aq -f name=productservice)" ]; then
+          if [ "$(sudo docker ps -aq -f name=apigateway)" ]; then
             sudo docker rm -f apigateway
           fi
       - name: Run docker container
