@@ -9,4 +9,4 @@ COPY build/libs/${PROJECT_NAME}-${PROJECT_VERSION}.jar apigateway.jar
 
 EXPOSE 8083
 
-ENTRYPOINT ["sh","-c","java -jar /productservice.jar --server.port=8081"]
+ENTRYPOINT ["sh","-c","java -jar /apigateway.jar --server.port=8083"]
