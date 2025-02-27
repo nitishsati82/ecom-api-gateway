@@ -1,0 +1,127 @@
+spring:
+  cache:
+    type: redis
+  redis:
+    host: 10.127.130.243
+    port: 6379
+    password: adminpassword
+    key-expiry-in-minutes: 60
+    socket-timeout-in-millis: 2000
+    command-timeout-in-seconds: 20
+  jedis:
+    pool:
+      max-active: 10          # Maximum number of connections
+      max-idle: 5             # Maximum idle connections
+      min-idle: 1             # Minimum idle connections
+      max-wait: 1000
+
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+              - "http://10.127.130.243:8119"
+              - "http://riyadbank:8119/"
+              - "http://abcbankm:8119/"
+              - "http://riyadbank:8124/"
+              - "http://abcbankm:8124/"
+              - "http://dell-info:8119/"
+              - "http://dell-info:8124/"
+              - "http://zeel-info:8119/"
+              - "http://zeel-info:8124/"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+      routes:
+        - id: faas-be-identity
+          uri: http://10.127.130.243:9100
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api(?<segment>/.*), /api${segment}
+            - CustomRequestHeader
+            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+
+        - id: faas-be-catalogue
+          uri: http://10.127.130.243:9101
+          predicates:
+            - Path=/catalogue/**
+          filters:
+            - RewritePath=/catalogue(?<segment>.*), /catalogue${segment}
+            - CustomRequestHeader
+            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+
+        - id: faas-be-portal
+          uri: http://10.127.130.243:9102
+          predicates:
+            - Path=/portal/**
+          filters:
+            - RewritePath=/portal(?<segment>.*), /portal${segment}
+            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+
+        - id: faas-be-notification
+          uri: http://10.127.130.243:9103
+          predicates:
+            - Path=/notification/**
+          filters:
+            - RewritePath=/notification(?<segment>.*), /notification${segment}
+            - CustomRequestHeader
+            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+
+        - id: faas-be-util
+          uri: http://10.127.130.243:9090
+          predicates:
+            - Path=/util/**
+          filters:
+            - RewritePath=/util(?<segment>.*), /util{segment}
+            - CustomRequestHeader
+            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+
+        - id: faas-be-fms
+          uri: http://10.127.130.243:9104
+          predicates:
+            - Path=/fms/**
+          filters:
+            - RewritePath=/fms(?<segment>.*), /fms${segment}
+            - CustomRequestHeader
+            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+
+        - id: faas-be-billing
+          uri: http://10.127.130.243:9105
+          predicates:
+            - Path=/billing/**
+          filters:
+            - RewritePath=/billing(?<segment>.*), /billing${segment}
+            - CustomRequestHeader
+            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+
+        - id: wsl-sandbox-service
+          uri: http://10.127.130.243:9106
+          predicates:
+            - Path=/mock/**
+          filters:
+            - RewritePath=/mock(?<segment>.*), /mock${segment}
+            - CustomRequestHeader
+            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+
+        - id: wsl-strapi-cms
+          uri: http://10.127.130.243:1337
+          predicates:
+            - Path=/cms/**
+          filters:
+            - RewritePath=/cms(?<segment>.*), /cms${segment}
+            - CustomRequestHeader
+            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+
+
+
+identity-url: http://10.127.130.243:9100/api
