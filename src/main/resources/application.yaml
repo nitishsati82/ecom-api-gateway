@@ -34,14 +34,14 @@ spring:
             - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
 
         - id: inventory-service
-          uri: http://13.203.142.39:8081
+          uri: http://13.235.208.227:8081
           predicates:
             - Path=/inventory/**
           filters:
             - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
 
         - id: order-service
-          uri: http://13.203.142.39:8083
+          uri: http://13.235.208.227:8083
           predicates:
             - Path=/order/**
           filters:
