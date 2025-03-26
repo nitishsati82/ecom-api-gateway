@@ -7,6 +7,6 @@ ENV PROJECT_VERSION=0.0.1-SNAPSHOT
 
 COPY build/libs/${PROJECT_NAME}-${PROJECT_VERSION}.jar apigateway.jar
 
-EXPOSE 8083
+EXPOSE 8089
 
-ENTRYPOINT ["sh","-c","java -jar /apigateway.jar --server.port=8083"]
+ENTRYPOINT ["sh","-c","java -jar /apigateway.jar --server.port=8089"]

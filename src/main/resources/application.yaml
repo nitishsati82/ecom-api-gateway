@@ -27,7 +27,7 @@ spring:
             - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
 
         - id: product-service
-          uri: http://13.200.154.116:8081
+          uri: http://13.235.208.227:8090
           predicates:
             - Path=/product/**
           filters:
