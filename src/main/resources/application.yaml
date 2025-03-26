@@ -7,7 +7,9 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "*"
+              - "http://localhost:3000"
+              - "https://13.235.208.227"
+              - "https://13.235.208.227/"
             allowedMethods:
               - GET
               - POST
@@ -15,15 +17,8 @@ spring:
               - DELETE
             allowedHeaders:
               - "*"
-            allowCredentials: true
+            allowCredentials: false
       routes:
-        - id: user-service
-          uri: http://13.200.154.116:8082
-          predicates:
-            - Path=/user/**
-          filters:
-            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
-
         - id: product-service
           uri: http://13.235.208.227:8090
           predicates:
