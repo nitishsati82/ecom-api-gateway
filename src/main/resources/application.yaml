@@ -53,3 +53,12 @@ logging:
     org.springframework.cloud.gateway: DEBUG  # Debug logs for Gateway routing and filters
     org.springframework.web: DEBUG           # Debug logs for HTTP request handling
     org.springframework.http: DEBUG
+
+server:
+  port: 8443
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: mypassword
+    key-store-type: PKCS12
+    key-alias: mysslkey
+    key-password: mypassword
