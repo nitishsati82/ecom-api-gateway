@@ -54,4 +54,3 @@ logging:
     org.springframework.cloud.gateway: DEBUG  # Debug logs for Gateway routing and filters
     org.springframework.web: DEBUG           # Debug logs for HTTP request handling
     org.springframework.http: DEBUG
-
