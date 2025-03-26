@@ -7,14 +7,13 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "http://localhost:3000"
-              - "http://localhost:3000/"
-              - "https://13.235.208.227"
+              - "https://13.235.208.227"  # Match frontend URL exactly
             allowedMethods:
               - GET
               - POST
               - PUT
               - DELETE
+              - OPTIONS   # Allow preflight requests
             allowedHeaders:
               - "*"
             exposedHeaders:
@@ -26,33 +25,22 @@ spring:
           predicates:
             - Path=/product/**
           filters:
-            - RemoveResponseHeader=Access-Control-Allow-Origin
             - SetResponseHeader=Access-Control-Allow-Origin, https://13.235.208.227
             - SetResponseHeader=Access-Control-Allow-Methods, GET, POST, PUT, DELETE, OPTIONS
             - SetResponseHeader=Access-Control-Allow-Headers, *
             - SetResponseHeader=Access-Control-Allow-Credentials, true
 
-        - id: inventory-service
-          uri: http://13.235.208.227:8081
+        # Handle CORS Preflight Requests
+        - id: preflight-requests
+          uri: no://op
           predicates:
-            - Path=/inventory/**
+            - Method=OPTIONS
           filters:
-            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
-
-        - id: order-service
-          uri: http://13.235.208.227:8083
-          predicates:
-            - Path=/order/**
-          filters:
-            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
-  application:
-    name: ecom-api-gateway
-
-logging:
-  level:
-    org.springframework.cloud.gateway: DEBUG  # Debug logs for Gateway routing and filters
-    org.springframework.web: DEBUG           # Debug logs for HTTP request handling
-    org.springframework.http: DEBUG
+            - SetResponseHeader=Access-Control-Allow-Origin, https://13.235.208.227
+            - SetResponseHeader=Access-Control-Allow-Methods, GET, POST, PUT, DELETE, OPTIONS
+            - SetResponseHeader=Access-Control-Allow-Headers, *
+            - SetResponseHeader=Access-Control-Allow-Credentials, true
+            - SetResponseStatus=200
 
 server:
   port: 8443
