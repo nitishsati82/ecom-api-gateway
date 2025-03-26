@@ -8,8 +8,8 @@ spring:
           '[/**]':
             allowedOrigins:
               - "http://localhost:3000"
+              - "http://localhost:3000/"
               - "https://13.235.208.227"
-              - "https://13.235.208.227/"
             allowedMethods:
               - GET
               - POST
@@ -17,14 +17,20 @@ spring:
               - DELETE
             allowedHeaders:
               - "*"
-            allowCredentials: false
+            exposedHeaders:
+              - "*"
+            allowCredentials: true
       routes:
         - id: product-service
           uri: http://13.235.208.227:8090
           predicates:
             - Path=/product/**
           filters:
-            - SetResponseHeader=Content-Security-Policy,"script-src 'self'"
+            - RemoveResponseHeader=Access-Control-Allow-Origin
+            - SetResponseHeader=Access-Control-Allow-Origin, https://13.235.208.227
+            - SetResponseHeader=Access-Control-Allow-Methods, GET, POST, PUT, DELETE, OPTIONS
+            - SetResponseHeader=Access-Control-Allow-Headers, *
+            - SetResponseHeader=Access-Control-Allow-Credentials, true
 
         - id: inventory-service
           uri: http://13.235.208.227:8081
