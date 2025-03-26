@@ -31,6 +31,26 @@ spring:
             - SetResponseHeader=Access-Control-Allow-Headers, *
             - SetResponseHeader=Access-Control-Allow-Credentials, true
 
+        - id: inventory-service
+          uri: http://13.235.208.227:8081
+          predicates:
+            - Path=/inventory/**
+          filters:
+            - SetResponseHeader=Access-Control-Allow-Origin, https://13.235.208.227
+            - SetResponseHeader=Access-Control-Allow-Methods, GET, POST, PUT, DELETE, OPTIONS
+            - SetResponseHeader=Access-Control-Allow-Headers, *
+            - SetResponseHeader=Access-Control-Allow-Credentials, true
+
+        - id: order-service
+          uri: http://13.235.208.227:8083
+          predicates:
+            - Path=/order/**
+          filters:
+            - SetResponseHeader=Access-Control-Allow-Origin, https://13.235.208.227
+            - SetResponseHeader=Access-Control-Allow-Methods, GET, POST, PUT, DELETE, OPTIONS
+            - SetResponseHeader=Access-Control-Allow-Headers, *
+            - SetResponseHeader=Access-Control-Allow-Credentials, true
+
         # Handle CORS Preflight Requests
         - id: preflight-requests
           uri: no://op
