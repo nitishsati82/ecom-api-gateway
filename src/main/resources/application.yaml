@@ -7,7 +7,8 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "https://13.235.208.227"  # Match frontend URL exactly
+              - "https://13.235.208.227"
+              - "http://localhost:3000"# Match frontend URL exactly
             allowedMethods:
               - GET
               - POST
@@ -40,8 +41,6 @@ spring:
             - SetResponseHeader=Access-Control-Allow-Methods, GET, POST, PUT, DELETE, OPTIONS
             - SetResponseHeader=Access-Control-Allow-Headers, *
             - SetResponseHeader=Access-Control-Allow-Credentials, true
-            - SetResponseStatus=200
-
 server:
   port: 8443
   ssl:
